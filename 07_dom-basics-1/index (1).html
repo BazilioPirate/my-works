@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="timer">
+    <div class="timer__dashboard">
+      <input id="timerInput" class="timer__dashboard-input" type="number" placeholder="Введите количество секунд">
+      <button id="timerBtn" class="timer__dashboard-btn">СТАРТ</button>
+    </div>
+    <div id="timerDisplay" class="timer__display">
+      0
+    </div>
+  </div>
+  <div id="root" class="root">
+
+  </div>
+  <script src="src/timer.js"></script>
+  <script src="src/createElementWithTimeout.js"></script>
+</body>
+</html>

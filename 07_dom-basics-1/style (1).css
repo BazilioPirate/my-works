@@ -1,0 +1,48 @@
+.timer{
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding-top: 40px;
+}
+.timer__dashboard{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.timer__dashboard-btn{
+  background-color: #ADFF2F;
+  padding: 10px 0;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.timer__dashboard-input{
+  width: 200px;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 30px;
+}
+
+.timer__dashboard-input::placeholder{
+  font-size: 14px;
+  padding-left: 5px;
+}
+
+.timer__display{
+  width: 100px;
+  margin-bottom: 20px;
+  padding: 40px;
+  text-align: center;
+  vertical-align: center;
+  font-size: 50px;
+  font-weight: 800;
+  border: 2px solid black;
+  border-radius: 100%;
+}
+
+.root{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

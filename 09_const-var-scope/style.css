@@ -1,0 +1,195 @@
+*{
+  box-sizing: border-box;
+}
+img{
+  max-width: 100%;
+}
+
+body{
+  margin: 0;
+  background-image: url('./img/main-background.jpg');
+  background-position: center center;
+  background-size: cover;
+}
+
+.container{
+  position: relative;
+}
+
+.cards__start-form{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1;
+}
+
+.cards__start-description-cont{
+  padding: 20px 510px;
+  font-size: 40px;
+  text-align: center;
+  color: azure;
+}
+
+.cards__start-description-heading{
+  margin: 0 0 20px 0;
+}
+
+.cards__start-description{
+  font-size: 21px;
+  width: 540px;
+}
+
+.cards__start-input{
+  margin-bottom: 20px;
+  width: 200px;
+  height: 80px;
+  text-align: center;
+  border: hidden;
+  border-radius: 30px;
+  font-size: 60px;
+  background-color: rgb(252, 204, 145);
+}
+
+.cards__start-input::placeholder{
+  font-size: 18px;
+}
+
+.cards__start-button{
+  width: 150px;
+  height: 150px;
+  border: hidden;
+  border-radius: 50%;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 900;
+  background-color: rgb(182, 124, 49);
+  transform: scale(1);
+}
+
+.cards__start-button:active{
+  transform: scale(0.95);
+  transition: transform .2s;
+}
+
+.title-cont{
+  width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.479);
+  border-radius: 50px;
+  /* background-image: url("./img/svitok.png");
+  background-position: top center;
+  background-size: 1300px 220px;
+  background-repeat: no-repeat; */
+}
+
+.title-cont__heading{
+  margin: 0;
+  font-size: 60px;
+  line-height: 26px;
+  font-weight: 900;
+  letter-spacing: 10px;
+  color: bisque;
+}
+
+.game-description{
+  font-size: 24px;
+}
+
+.timer-display{
+  width: 220px;
+  height: 220px;
+  position: absolute;
+  text-align: center;
+  padding: 15px;
+  top: 25px;
+  right: 25px;
+  font-size: 154px;
+  color: white;
+  border: 4px solid white;
+  border-radius: 50%;
+}
+
+.card{
+  position: relative;
+  width: calc(25% - 10px);
+  height: calc(33.333% - 10px);
+  margin: 5px;
+  box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+  transform-style: preserve-3d;
+  transform: scale(1);
+  transition: transform .5s;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.card:active{
+  transform: scale(0.97);
+  transition: transform .2s;
+}
+
+.card__face {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  line-height: 200px;
+  color: white;
+  font-weight: bold;
+  font-size: 164px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden; /* скрываем обратную сторону */
+  border-radius: 15px;
+}
+
+.card__face--back {
+  background: black;
+  transform: rotateY( 180deg );
+}
+
+.card.is-flipped{
+  transform: rotateY(180deg);
+}
+
+.cards-cont{
+  width: 640px;
+  height: 640px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+.alert{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+
+  justify-content: center;
+  align-items: center;
+  font-size: 64px;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  z-index: 1;
+}
+
+.hidden{
+  display: none;
+}
+
+
+
+
