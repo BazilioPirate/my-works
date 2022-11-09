@@ -1,0 +1,27 @@
+.heading{
+  font-size: 24px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #000;
+}
+
+.dropdown{
+  width: 137.5px;
+
+}
+
+
+.js-keyboard-validation{
+  margin-bottom: 20px;
+}
+
+
+.scroll-box{
+  height: 100vh;
+  margin: 20px;
+  border: 2px solid black;
+  border-radius: 20px;
+}
+
+.js-scroll-btn{
+  margin-bottom: 10px;
+}

@@ -1,0 +1,133 @@
+/* #root{
+  --main-color:0 0 7px rgb(219, 150, 20),
+  0 0 10px rgb(219, 150, 20),
+  0 0 21px rgb(219, 150, 20),
+  0 0 42px rgb(151, 52, 52),
+  0 0 82px rgb(151, 52, 52),
+  0 0 92px rgb(151, 52, 52),
+  0 0 102px rgb(32, 32, 32),
+  0 0 151px rgb(151, 52, 52);
+} */
+
+*{
+  list-style: none;
+}
+
+.container{
+  padding-left: 20px;
+  padding-right: 20px;
+  max-width: calc(100% - 40px);
+}
+
+body{
+  background-image: url(./img/zv-bg-01.jpg);
+}
+
+.star-wars__detail-heading{
+  font-size: 80px;
+  color: #fff;
+  text-shadow:
+    0 0 7px rgb(219, 150, 20),
+    0 0 10px rgb(219, 150, 20),
+    0 0 21px rgb(219, 150, 20),
+    0 0 42px rgb(151, 52, 52),
+    0 0 82px rgb(151, 52, 52),
+    0 0 92px rgb(151, 52, 52),
+    0 0 102px rgb(32, 32, 32),
+    0 0 151px rgb(151, 52, 52);
+}
+
+.star-wars__back-btn{
+  background-color: transparent;
+  border: 1px solid #fff;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #fff;
+  text-shadow:
+    0 0 7px rgb(219, 150, 20),
+    0 0 10px rgb(219, 150, 20),
+    0 0 21px rgb(219, 150, 20),
+    0 0 42px rgb(151, 52, 52),
+    0 0 82px rgb(151, 52, 52),
+    0 0 92px rgb(151, 52, 52),
+    0 0 102px rgb(32, 32, 32),
+    0 0 151px rgb(151, 52, 52);
+}
+
+.star-wars__detail-description{
+  max-width: 1530px;
+  margin-bottom: 40px;
+  font-size: 30px;
+  line-height: 36px;
+  color: #fff;
+  text-shadow:
+    0 0 7px rgb(219, 150, 20),
+    0 0 10px rgb(219, 150, 20),
+    0 0 21px rgb(219, 150, 20),
+    0 0 42px rgb(151, 52, 52),
+    0 0 82px rgb(151, 52, 52),
+    0 0 92px rgb(151, 52, 52),
+    0 0 102px rgb(32, 32, 32),
+    0 0 151px rgb(151, 52, 52);
+}
+
+.star-wars__details{
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.star-wars__planets-container,
+.star-wars__species-container,
+.star-wars__starships-container,
+.star-wars__vehicles-container,
+.star-wars__characters-container{
+  width: 250px;
+  margin-right: 40px;
+}
+
+.star-wars__planets-list,
+.star-wars__species-list,
+.star-wars__starships-list,
+.star-wars__vehicles-list,
+.star-wars__characters-list{
+  padding-left: 0;
+}
+
+.star-wars__planets-heading,
+.star-wars__species-heading,
+.star-wars__starships-heading,
+.star-wars__vehicles-heading,
+.star-wars__characters-heading{
+  text-transform: uppercase;
+  font-size: 34px;
+  color: #fff;
+  text-shadow:
+    0 0 7px rgb(219, 150, 20),
+    0 0 10px rgb(219, 150, 20),
+    0 0 21px rgb(219, 150, 20),
+    0 0 42px rgb(151, 52, 52),
+    0 0 82px rgb(151, 52, 52),
+    0 0 92px rgb(151, 52, 52),
+    0 0 102px rgb(32, 32, 32),
+    0 0 151px rgb(151, 52, 52);
+}
+
+.star-wars__planets-item,
+.star-wars__species-item,
+.star-wars__starships-item,
+.star-wars__vehicles-item,
+.star-wars__characters-item{
+  text-transform: uppercase;
+  font-size: 24px;
+  color: #fff;
+  text-shadow:
+    0 0 7px rgb(219, 150, 20),
+    0 0 10px rgb(219, 150, 20),
+    0 0 21px rgb(219, 150, 20),
+    0 0 42px rgb(151, 52, 52),
+    0 0 82px rgb(151, 52, 52),
+    0 0 92px rgb(151, 52, 52),
+    0 0 102px rgb(32, 32, 32),
+    0 0 151px rgb(151, 52, 52);
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>Practice work 1.7</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  integrity="sha384—JcKb8q3igJ61gNV9KGb8thSsNj pSL@n8PARn9HuZOnIxN@hoP+VmmDGMN5t9UJOZ"
+  crossorigin="anonymous">
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./dropdown-block.js"></script>
+  <script defer src="./keyboard-events-validation.js">  </script>
+  <script defer src="./scroll.js"></script>
+</head>
+<body>
+  <div class="container py-5 ">
+    <h1 class="heading">Задание № 1</h1>
+    <div class="dropdown">
+      <a class="btn btn-secondary dropdown-toggle js-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="#dropdownBlock" aria-expanded="false">
+        Нажми меня
+      </a>
+      <div class="drop">
+        <div id="dropdownBlock" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="#">Дествие</a>
+          <a class="dropdown-item" href="#">Другое действие</a>
+          <a class="dropdown-item" href="#">Что-нибудь еще</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container js-keyboard-validation">
+    <h1 class="heading">Задание № 2</h1>
+    <form class="js-form" id="form">
+      <div class="form-row">
+        <div class="form-group col">
+          <input id="family" type="text" class="form-control" placeholder="Фамилия">
+        </div>
+        <div  class="form-group col">
+          <input id="name" type="text" class="form-control" placeholder="Имя">
+        </div>
+        <div class="form-group col">
+          <input id="secondName"  type="text" class="form-control" placeholder="Отчество">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </form>
+      <ul class="list-group p-4">
+
+      </ul>
+  </div>
+  <div class="container js-scroll-event">
+    <h1 class="heading">Задание № 3</h1>
+    <div class="scroll-box">
+
+    </div>
+    <button type="button" class="btn btn-info btn-block js-scroll-btn">Info</button>
+  </div>
+</body>
+</html>

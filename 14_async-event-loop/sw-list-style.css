@@ -1,0 +1,68 @@
+body{
+  background-image: url(./img/zv-bg-01.jpg);
+  
+}
+
+.hidden{
+  display:none;
+}
+
+.star-wars__header{
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container{
+  padding: 10px;
+
+}
+
+.star-wars__heading{
+  font-size: 100px;
+  /* text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0,0,0,0.15); */
+  color: #fff;
+  text-shadow:
+    0 0 7px rgb(219, 150, 20),
+    0 0 10px rgb(219, 150, 20),
+    0 0 21px rgb(219, 150, 20),
+    0 0 42px rgb(151, 52, 52),
+    0 0 82px rgb(151, 52, 52),
+    0 0 92px rgb(151, 52, 52),
+    0 0 102px rgb(32, 32, 32),
+    0 0 151px rgb(151, 52, 52);
+}
+
+.star-wars__episodes-list{
+  list-style: none;
+}
+
+.star-wars__item{
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.star-wars__item-link{
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 48px;
+  line-height: 56px;
+  color: #fff;
+  text-shadow:
+    0 0 7px rgb(219, 150, 20),
+    0 0 10px rgb(219, 150, 20),
+    0 0 21px rgb(219, 150, 20),
+    0 0 42px rgb(151, 52, 52),
+    0 0 82px rgb(151, 52, 52),
+    0 0 92px rgb(151, 52, 52),
+    0 0 102px rgb(32, 32, 32),
+    0 0 151px rgb(151, 52, 52);
+}
+
+
+
+@font-face {
+	font-family: 'Star Jedi Outline'; 
+	src: url(/fonts/StarJediOutline-y0xm.ttf); 
+}
