@@ -1,83 +1,82 @@
 # Деплой eilat.coahlab.com
 
-Сайт — статические файлы (`index.html`, `style.css`, `app.js`, `data.js`, `manifest.json`, `icons/`), сборка не нужна.
+Сайт — статические файлы (`index.html`, `style.css`, `app.js`, `data.js`, `manifest.json`, `icons/`), сборки не требует.
 
-**Важно:** деплой нельзя выполнить из сессии Claude Code on the web — сетевая политика этой песочницы разрешает только HTTPS через прокси и блокирует произвольный TCP (в т.ч. SSH/22). Выполняйте шаги ниже с машины, у которой есть обычный SSH-доступ к серверу `203.161.49.154`.
+## Почему это не выполнено автоматически
 
-## Вариант А — автоматически (deploy.sh)
+Деплой нельзя запустить из сессии Claude Code on the web — сетевая политика этой песочницы пропускает только HTTPS через прокси и блокирует произвольный TCP, включая SSH/22 (см. `/root/.ccr/README.md` внутри той сессии, раздел «Not supported through the proxy»). Это ограничение самой среды, не связано с ключом или сервером.
+
+Все файлы ниже подготовлены так, чтобы шаг деплоя занял пару команд у любого агента/человека с обычным SSH-доступом (например, Cursor на вашей машине, или сам Claude Code CLI локально).
+
+## Архитектура сервера (важно!)
+
+Сервер `203.161.49.154` обслуживает сайты через **Docker-контейнеры**, которые проксирует хостовый nginx — НЕ голая раздача статики через nginx:
+
+| Сайт | Контейнер | Порт |
+|---|---|---|
+| content.coahlab.com (прод) | `cf_webapp` | 8000 |
+| dev.content.coahlab.com | `cf_webapp_dev` | 8001 |
+| style.coahlab.com | `style-changer` | 5100 |
+| **eilat.coahlab.com (новый)** | `eilat_guide` | **8002** (предположительно, проверить) |
+
+Правила работы на сервере — `/root/cf_docs/RULES.md`. **Прочитать первым делом**, до любых изменений.
+
+## Файлы в этой папке
+
+- `Dockerfile` — собирает образ `nginx:alpine` со статикой сайта внутри.
+- `nginx-site.conf` — конфиг nginx **внутри контейнера** (раздаёт статику на порту 80 контейнера).
+- `docker-compose.yml` — поднимает контейнер `eilat_guide`, пробрасывает `127.0.0.1:8002:80` (порт — предположение по аналогии с 8000/8001/5100, см. ниже).
+- `deploy.sh` — три режима: `check` (только смотрит, ничего не меняет), `apply` (копирует файлы, поднимает контейнер, настраивает nginx-прокси хоста), `ssl` (certbot).
+
+## Как деплоить
 
 ```bash
 cd eilat-guide
 chmod +x deploy.sh
-SSH_KEY=~/.ssh/id_ed25519 LETSENCRYPT_EMAIL=you@example.com ./deploy.sh
+
+# 1. Сначала только посмотреть — ничего не меняет на сервере:
+SSH_KEY=~/.ssh/id_ed25519 ./deploy.sh check
 ```
 
-Скрипт сам:
-1. создаёт `/var/www/eilat.coahlab.com/` на сервере;
-2. копирует туда файлы сайта через `rsync`;
-3. пишет nginx server block и подключает его в `sites-enabled` (рядом с `content.coahlab.com`, `bizlog.coahlab.com`);
-4. (если задан `LETSENCRYPT_EMAIL`) выпускает SSL через certbot.
+`check` выведет:
+- содержимое `RULES.md` — прочитайте перед следующим шагом;
+- список работающих контейнеров и портов — убедитесь, что 8002 свободен (если нет — перезапустить с `CONTAINER_PORT=8003 ./deploy.sh apply` и т.д.);
+- где лежат конфиги nginx для существующих сайтов — сверьте, что `apply` пишет конфиг в то же место (`sites-available`/`sites-enabled` или `conf.d`, скрипт определяет автоматически, но лучше свериться глазами);
+- резолвится ли DNS `eilat.coahlab.com`.
 
-Без `LETSENCRYPT_EMAIL` скрипт остановится перед certbot — тогда шаг 4 нужно выполнить вручную (см. ниже) после того, как заработает DNS.
+```bash
+# 2. Когда всё сверено — реальный деплой:
+SSH_KEY=~/.ssh/id_ed25519 ./deploy.sh apply
 
-## Вариант Б — вручную, шаг за шагом
+# 3. DNS: A-запись eilat.coahlab.com -> 203.161.49.154 должна быть применена
+#    (проверяется в check). Без неё certbot не сработает.
 
-1. **Скопировать файлы на сервер:**
-   ```bash
-   rsync -avz --delete eilat-guide/ root@203.161.49.154:/var/www/eilat.coahlab.com/
-   ```
-   (Если на сервере уже принят другой путь для сайтов — например `/home/*/sites/` — используйте его вместо `/var/www/...`, посмотрите на структуру `content.coahlab.com` рядом.)
+# 4. SSL:
+SSH_KEY=~/.ssh/id_ed25519 LETSENCRYPT_EMAIL=you@example.com ./deploy.sh ssl
+```
 
-2. **nginx server block** — создать `/etc/nginx/sites-available/eilat.coahlab.com`:
-   ```nginx
-   server {
-       listen 80;
-       listen [::]:80;
-       server_name eilat.coahlab.com;
+## Проверка
 
-       root /var/www/eilat.coahlab.com;
-       index index.html;
+```bash
+curl -I https://eilat.coahlab.com/
+```
 
-       gzip on;
-       gzip_types text/css application/javascript application/json text/plain image/svg+xml;
-       gzip_min_length 512;
+Должно быть `200 OK`. Дальше — открыть сайт с телефона по мобильной сети до поездки (19 июля): проверить меню, Waze-кнопки, чек-листы (localStorage переживает обновление страницы).
 
-       location / {
-           try_files $uri $uri/ /index.html;
-       }
+## SSH-доступ
 
-       location ~* \.(?:css|js|json|png|jpg|jpeg|webp|svg|ico)$ {
-           expires 7d;
-           add_header Cache-Control "public";
-       }
+```
+Host: 203.161.49.154
+User: root
+Identity file: id_ed25519 (у вас локально — C:\Users\Vasili\.ssh\id_ed25519)
+```
 
-       location = /manifest.json {
-           add_header Content-Type application/manifest+json;
-       }
-   }
-   ```
-   Затем:
-   ```bash
-   ln -s /etc/nginx/sites-available/eilat.coahlab.com /etc/nginx/sites-enabled/
-   nginx -t
-   systemctl reload nginx
-   ```
+Приватный ключ передавался в чат ранее в этой сессии Claude Code on the web, но использован не был (см. «Почему это не выполнено автоматически» выше) и был удалён из временной директории. Для деплоя достаточно локального файла ключа на вашей машине — его заново пересылать никуда не нужно, `deploy.sh` просто использует путь через `SSH_KEY=`.
 
-3. **DNS.** Убедитесь, что A-запись `eilat.coahlab.com` указывает на `203.161.49.154`. Без этого шаги 4–5 не сработают.
+## Если порт 8002 занят или nginx устроен иначе
 
-4. **SSL (Let's Encrypt / certbot):**
-   ```bash
-   certbot --nginx -d eilat.coahlab.com --agree-tos -m you@example.com --redirect
-   ```
-   Certbot сам допишет `listen 443 ssl` и редирект с 80 на 443 в конфиг из шага 2.
+`deploy.sh apply` берёт порт из `CONTAINER_PORT` (по умолчанию 8002) и сам определяет, `sites-available/sites-enabled` на сервере или `conf.d`. Если `check` покажет другую картину — переопределите переменные:
 
-5. **Проверка:**
-   ```bash
-   curl -I https://eilat.coahlab.com/
-   ```
-   Должно быть `200 OK`. Дальше — открыть сайт с телефона по мобильной сети (перед поездкой 19 июля), проверить меню, Waze-кнопки, чек-листы.
-
-## Примечания
-
-- В задаче домен был указан как `eilat.coahlab.con` — считаю это опечаткой, использован `.com`, как и в остальном тексте ТЗ.
-- Точный путь сайтов на сервере (`/var/www/...` или другой) не подтверждён — я не смог подключиться по SSH из этой сессии, чтобы посмотреть, как размещены `content.coahlab.com` и `bizlog.coahlab.com`. Проверьте перед запуском `deploy.sh` и поправьте `REMOTE_DIR` в скрипте при необходимости.
+```bash
+CONTAINER_PORT=8003 SSH_KEY=~/.ssh/id_ed25519 REMOTE_DIR=/root/eilat_guide ./deploy.sh apply
+```

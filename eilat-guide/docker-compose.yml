@@ -1,0 +1,11 @@
+# Порт 8002 — предположение (8000=cf_webapp, 8001=cf_webapp_dev, 5100=style-changer
+# уже заняты по данным cf_docs). Перед запуском проверьте на сервере:
+#   ss -tlnp | grep -E ':(8000|8001|5100|8002)\b'
+# и при конфликте поменяйте порт здесь и в хостовом nginx-конфиге (см. DEPLOY.md).
+services:
+  eilat_guide:
+    build: .
+    container_name: eilat_guide
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8002:80"
